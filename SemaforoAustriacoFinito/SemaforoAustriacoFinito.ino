@@ -67,6 +67,8 @@ pinMode(3,OUTPUT);//R1
 pinMode(4,OUTPUT);//V2
 pinMode(5,OUTPUT);//G2
 pinMode(6,OUTPUT);//R2
+Serial.begin(9600); //opens a serial port, sets data rate to 9600
+Serial.print("seriale attivata");
 }
 
 
