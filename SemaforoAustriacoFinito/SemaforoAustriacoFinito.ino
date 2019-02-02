@@ -1,3 +1,7 @@
+String s;
+int lampeggi = 0;
+int tempoRosso = 0;
+int tempoLampeggio = 0;
 void Fermi(void)
 {
   digitalWrite(3,HIGH);
@@ -18,6 +22,8 @@ void Fermi1(void)
 }
 void lampeggiante(void)
 {
+  
+  
   digitalWrite(2,HIGH);
   digitalWrite(3,HIGH);
   for(int i = 0; i<4;i++)
@@ -74,15 +80,22 @@ Serial.print("seriale attivata");
 //chiedere all'ultente il delay all'utenete comandi Serial.availabele, Serial.readString(), Seria.print, valore.
 void loop() {
   // put your main code here, to run repeatedly:
-
+  Serial.println("INSERISCI IL TEMPO DI ATTESA DEL ROSSO");
+while(Serial.available() == 0)
+if(Serial.available() > 0){
+  s = Serial.readString();
+  Serial.print("HAI INSERITO: ");
+  Serial.println(s.toInt());
+  s = tempoRosso;
+}
 
 Fermi();
-delay(5000);
+delay(tempoRosso);
 lampeggiante();
 giallo();
 delay(4000);
 Fermi1();
-delay(5000);
+delay(tempoRosso);
 lampeggiante1();
 giallo1();
 delay(4000);
