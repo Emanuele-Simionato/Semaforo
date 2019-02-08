@@ -1,7 +1,7 @@
-String s;
-int lampeggi = 0;
-int tempoRosso = 0;
-int tempoLampeggio = 0;
+int tempoRosso;
+int tempoGiallo;
+int tempoVerde;
+int numeroLampeggi;
 void Fermi(void)
 {
   digitalWrite(3,HIGH);
@@ -21,17 +21,15 @@ void Fermi1(void)
   digitalWrite(5,LOW);  
 }
 void lampeggiante(void)
-{
-  
-  
+{  
   digitalWrite(2,HIGH);
   digitalWrite(3,HIGH);
-  for(int i = 0; i<4;i++)
+  for(int i = 0; i<numeroLampeggi;i++)
   {
     digitalWrite(4,LOW);
-    delay(1000);
+    delay(tempoVerde/numeroLampeggi);
     digitalWrite(4,HIGH);
-    delay(1000);   
+    delay(tempoVerde/numeroLampeggi);   
   }
   digitalWrite(7,LOW);
   digitalWrite(5,LOW);
@@ -41,12 +39,12 @@ void lampeggiante1(void)
 {
   digitalWrite(5,HIGH);
   digitalWrite(6,HIGH);
-  for(int i = 0; i<4;i++)
+  for(int i = 0; i<numeroLampeggi;i++)
   {
     digitalWrite(7,LOW);
-    delay(1000);
+    delay(tempoVerde/numeroLampeggi);
     digitalWrite(7,HIGH);
-    delay(1000);   
+    delay(tempoVerde/numeroLampeggi);   
   }
   
   digitalWrite(2,LOW);
@@ -74,31 +72,38 @@ pinMode(4,OUTPUT);//V2
 pinMode(5,OUTPUT);//G2
 pinMode(6,OUTPUT);//R2
 Serial.begin(9600); //opens a serial port, sets data rate to 9600
-Serial.println("seriale attivata");
+Serial.println("Inserisci la durata del colore rosso");
+while(Serial.available()==0){}
+tempoRosso = Serial.readString().toInt();
+Serial.println("Hai inserito");
+Serial.println(tempoRosso);
+tempoVerde = tempoRosso;
+Serial.println("Inserisci la durata del colore giallo");
+while(Serial.available()==0){}
+tempoGiallo = Serial.readString().toInt();
+Serial.println("Hai inserito");
+Serial.println(tempoGiallo);
+Serial.println("La durata del verde è:");
+Serial.println(tempoVerde);
+Serial.println("Inserisci quante volte vuoi che il verde lampeggi");
+while(Serial.available()==0){}
+numeroLampeggi = Serial.readString().toInt();
+Serial.println("Hai inserito");
+Serial.println(numeroLampeggi);
 }
 
-//chiedere all'ultente il delay all'utenete comandi Serial.availabele, Serial.readString(), Seria.print, valore.
+//chiedere all'ultente il delay all'utenete comandi Serial.available, Serial.readString(), Seria.print, valore.
 void loop() {
   // put your main code here, to run repeatedly:
-  Serial.println("INSERISCI IL TEMPO DI ATTESA DEL ROSSO");
-while(Serial.available() == 0){
-  Serial.println("BANANA"}
-if(Serial.available() > 0){
-  s = Serial.readString();
-  Serial.print("HAI INSERITO: ");
-  Serial.println(s.toInt());
-  s = tempoRosso;
-}
-
 Fermi();
 delay(tempoRosso);
 lampeggiante();
 giallo();
-delay(4000);
+delay(tempoGiallo);
 Fermi1();
 delay(tempoRosso);
 lampeggiante1();
 giallo1();
-delay(4000);
-
+delay(tempoGiallo);
+setup();
 }
