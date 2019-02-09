@@ -3,7 +3,7 @@ int tempoRosso;
 int tempoGiallo;
 int tempoVerde;
 int numeroLampeggi;
-void seriale()
+void Fermi(void)
 {
   digitalWrite(3,HIGH);
   digitalWrite(4,HIGH);
@@ -76,26 +76,46 @@ Serial.begin(9600); //opens a serial port, sets data rate to 9600
 Serial.println("Inserisci quante volte vuoi che il ciclo del semaforo venga eseguito");
 while(Serial.available()==0){}
 cicliSemaforo = Serial.readString().toInt();
+if(cicliSemaforo <= 0){ 
+  Serial.println("Impossibile inserire valori negativi");
+  setup();
+  }
 Serial.println("Hai inserito:");
 Serial.println(cicliSemaforo);
-Serial.println("Inserisci la durata del colore rosso");
+Serial.println("Inserisci la durata del colore rosso(IN MILLISECONDI!)");
 while(Serial.available()==0){}
 tempoRosso = Serial.readString().toInt();
+if(tempoRosso <= 0){
+  Serial.println("Impossibile inserire valori negativi");
+  setup();
+  }
 Serial.println("Hai inserito");
 Serial.println(tempoRosso);
 tempoVerde = tempoRosso;
-Serial.println("Inserisci la durata del colore giallo");
+Serial.println("Inserisci la durata del colore giallo(IN MILLISECONDI!)");
 while(Serial.available()==0){}
 tempoGiallo = Serial.readString().toInt();
+if(tempoGiallo <= 0){
+  Serial.println("Impossibile inserire valori negativi");
+  setup();
+  }
 Serial.println("Hai inserito");
 Serial.println(tempoGiallo);
-Serial.println("La durata del verde è:");
+Serial.println("La durata del verde è:(IN MILLISECONDI)");
 Serial.println(tempoVerde);
 Serial.println("Inserisci quante volte vuoi che il verde lampeggi");
 while(Serial.available()==0){}
 numeroLampeggi = Serial.readString().toInt();
-Serial.println("Hai inserito");
-Serial.println(numeroLampeggi);
+if(numeroLampeggi <= 0){
+  Serial.println("Impossibile inserire valori negativi");
+  setup();
+  }
+  else
+  {
+    Serial.println("Hai inserito");
+    Serial.println(numeroLampeggi);
+  }
+
 }
 
 //chiedere all'ultente il delay all'utenete comandi Serial.available, Serial.readString(), Seria.print, valore.
