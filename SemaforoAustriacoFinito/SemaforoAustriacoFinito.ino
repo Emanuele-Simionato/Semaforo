@@ -1,8 +1,9 @@
+int cicliSemaforo;
 int tempoRosso;
 int tempoGiallo;
 int tempoVerde;
 int numeroLampeggi;
-void Fermi(void)
+void seriale()
 {
   digitalWrite(3,HIGH);
   digitalWrite(4,HIGH);
@@ -22,7 +23,7 @@ void Fermi1(void)
 }
 void lampeggiante(void)
 {  
-  digitalWrite(2,HIGH);
+  digitalWrite(2,LOW);
   digitalWrite(3,HIGH);
   for(int i = 0; i<numeroLampeggi;i++)
   {
@@ -37,7 +38,7 @@ void lampeggiante(void)
 }
 void lampeggiante1(void)
 {
-  digitalWrite(5,HIGH);
+  digitalWrite(5,LOW);
   digitalWrite(6,HIGH);
   for(int i = 0; i<numeroLampeggi;i++)
   {
@@ -54,12 +55,12 @@ void lampeggiante1(void)
 }
 void giallo(void){
   digitalWrite(5,HIGH);
-  digitalWrite(3,HIGH);
+  digitalWrite(2,HIGH);
   digitalWrite(4,LOW);
 }
 void giallo1(void){
   digitalWrite(2,HIGH);
-  digitalWrite(6,HIGH);
+  digitalWrite(5,HIGH);
   digitalWrite(7,LOW);
 }
 
@@ -72,6 +73,11 @@ pinMode(4,OUTPUT);//V2
 pinMode(5,OUTPUT);//G2
 pinMode(6,OUTPUT);//R2
 Serial.begin(9600); //opens a serial port, sets data rate to 9600
+Serial.println("Inserisci quante volte vuoi che il ciclo del semaforo venga eseguito");
+while(Serial.available()==0){}
+cicliSemaforo = Serial.readString().toInt();
+Serial.println("Hai inserito:");
+Serial.println(cicliSemaforo);
 Serial.println("Inserisci la durata del colore rosso");
 while(Serial.available()==0){}
 tempoRosso = Serial.readString().toInt();
@@ -95,7 +101,8 @@ Serial.println(numeroLampeggi);
 //chiedere all'ultente il delay all'utenete comandi Serial.available, Serial.readString(), Seria.print, valore.
 void loop() {
   // put your main code here, to run repeatedly:
-Fermi();
+for(int k = 0; k < cicliSemaforo; k++){
+  Fermi();
 delay(tempoRosso);
 lampeggiante();
 giallo();
@@ -105,5 +112,7 @@ delay(tempoRosso);
 lampeggiante1();
 giallo1();
 delay(tempoGiallo);
+  }
+
 setup();
 }
